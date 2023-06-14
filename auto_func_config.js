@@ -1,8 +1,8 @@
 auto_options = {
     resource: {
-        wood: {
-            incr_priority: {
-                priority: 1,
+        wood: {              //未配置资源不会成为短缺资源
+            incr_priority: { //资源能提升优先级成为短缺资源的条件，通过short_resource()查下，会在页面左上角显示
+                priority: 1, //资源提升的先后顺序
                 woodMinRatio: 0.01,
             },
         },
@@ -196,8 +196,8 @@ auto_options = {
         groups: this.game.bld.buildingGroups,
         upgrade: {
             field:{
-                planet: 'earth',
-                valX:{
+                planet: 'earth', //所属星球
+                valX:{ //当前建筑的val值，即级别，valX代表所有级别，可以随意配置为val0，val1...
                     immediately: [{
                         noShortRes: ['catnip', 'wood'],
                     }]
@@ -206,20 +206,20 @@ auto_options = {
             pasture:{
                 planet: 'earth',
                 valX:{
-                    immediately: [{
+                    immediately: [{   //immediately,同个大括号内的值为与关系，多个大括号之间为或关系，蛮兔条件则立即升级
                         noShortRes: ['catnip', 'wood'],
                     }, {
-                        pastureEarthBldPromoteRes: 'energy',
-                        energyEmergency: true,
-                        pastureEarthBldIsLimited: false,
-                        force_incr_priority: true,
+                        pastureEarthBldPromoteRes: 'energy', //建筑是否促进资源
+                        energyEmergency: true,  //是否能源短缺，冬天会少产生能源
+                        pastureEarthBldIsLimited: false, //升级是否因为存储空间导致无法升级，容量不足导致无法升级
+                        force_incr_priority: true,  //达到条件则立即提升优先级
                     }]
                 },
                 up_stage: {
                     immediately:[{
-                        sunlifterSpaceBldUnlocked: true,
-                        catnipAvgRatioGe: {value: 2000},
-                        energyAvgValueLe: {value: 0},
+                        sunlifterSpaceBldUnlocked: true, //建筑是否可见
+                        catnipAvgRatioGe: {value: 2000}, //平均ratio是否大于某个值，还有count参数，默认为30，等同{value: 2000, count: 30}
+                        energyAvgValueLe: {value: 0}, //平均持有量小于等于，还有count参数，默认为30
                     }],
                 }
             },
@@ -227,7 +227,7 @@ auto_options = {
                 planet: 'earth',
                 valX:{
                     immediately: [{
-                        noShortRes: ['minerals'],
+                        noShortRes: ['minerals'], //所配置资源不是当前ShortRes
                     }, {
                         aqueductEarthBldPromoteRes: 'energy',
                         aqueductEarthBldIsLimited: false,
@@ -248,18 +248,18 @@ auto_options = {
                     immediately: [{ //立即升级
                         noShortRes: ['wood'],
                     }, {
-                        scienceMaxValueLe: 500000,
-                        antimatterMinValue: 125,
+                        scienceMaxValueLe: 500000, //最大容量小于等与某个值
+                        antimatterMinValue: 125, //最小拥有量
                         aiCoreEarthBldUnlocked: true,
                         force_incr_priority: true,
                     },{
-                        allRacesLimitedCulture: true,
+                        allRacesLimitedCulture: true,  //所有trade中的races都无法升级，无法embassy
                         limitedBldPercentage: 0.15, //所有受资源存储限制的建筑比例
                         force_incr_priority: true,
                     }],
                 },
                 up_stage: {
-                    immediately:[{}],
+                    immediately:[{}], //空时，立即可以升级
                 }
             },
             lumberMill:{
@@ -276,7 +276,7 @@ auto_options = {
                 planet: 'earth',
                 valX: {
                     immediately: [{
-                        mineralsAvgRatioLe: {value: 1},
+                        mineralsAvgRatioLe: {value: 1}, //平均速率小于等于某个值，系统会每秒自动采集相关数据，还有count参数，默认为30
                         incr_priority: true, //提升优先级，默认为false
                     }, {
                         coalAvgRatioLe: {value: 1},
@@ -367,7 +367,7 @@ auto_options = {
                         blueprintMinValue: 1,
                     }
                 },
-                on_off: [{
+                on_off: [{    //建筑允许手动跳转on的级别，与immediately一样
                     toValue: 0,
                     coalIsBaseShortRes: true,
                     coalIsNotWillFull: {value: 0.95},
@@ -396,8 +396,8 @@ auto_options = {
                 planet: 'earth',
                 val0:{
                     immediately: [{
-                        titaniumCanTrade: true,
-                        calcinerEarthBldUpgradeResEnough: {value: ['blueprint']},
+                        titaniumCanTrade: true, //资源在trade中是否可以购买
+                        calcinerEarthBldUpgradeResEnough: {value: ['blueprint']}, //对应建筑的升级所需资源是否已经准备好
                         force_incr_priority: true, //提升优先级，默认为false
                     }],
                 },
@@ -406,7 +406,7 @@ auto_options = {
                         titaniumCanTrade: true,
                         calcinerEarthBldUpgradeResEnough: {value: ['blueprint']},
                         calcinerEarthBldValLe: 5,
-                        titaniumTradeValueGe: 5,
+                        titaniumTradeValueGe: 5, //在trade中能购买到的的资源大于等于某个值
                         force_incr_priority: true, //提升优先级，默认为false
                     },{
                         titaniumCanTrade: true,
@@ -439,7 +439,7 @@ auto_options = {
                 valX: {
                     immediately: [{ //立即升级
                         noShortRes: ['wood', 'minerals', 'furs']
-                        // happinessLs: 1,
+                        // happinessLs: 1,  //幸福度小于某个值，1为100%
                     }],
                 },
                 up_stage: {
@@ -484,7 +484,7 @@ auto_options = {
                         oilAvgRatioLe: {value: 0.01, count: 30},
                         force_incr_priority: true, //强制提升优先级，立马提升，默认为false
                     },{
-                        orbitalLaunchProgramValGe: 1,
+                        orbitalLaunchProgramValGe: 1, //space中program的登记是否大于等于某个值
                         oilMaxValueLe: 45000,
                         moonMissionProgramUnlocked: true,
                         force_incr_priority: true, //强制提升优先级，立马提升，默认为false
@@ -578,7 +578,7 @@ auto_options = {
                         titaniumMinValue: 5000,
                         uraniumAvgRatioGe: {value: 0.1},
                         uraniumIsShortRes: false,
-                        moonOutpostSpaceOnGe: 1,
+                        moonOutpostSpaceOnGe: 1, //建筑打开的on是否大于等于某个值，比如建筑显示 0/10, 则表示级别为10，打开为0
                         force_incr_priority: true,
                     }], //立即升级
                 }
@@ -604,7 +604,7 @@ auto_options = {
                 planet: 'cath',
                 val0: {
                     immediately: [{
-                        upgrades: ['miningDrill'],
+                        upgrades: ['miningDrill'], //workshop中的升级项是否已经研究
                         titaniumMinRatio: 0.1,
                         oilMinRatio: 1,
                         starchartMinValue: 325,
@@ -686,11 +686,11 @@ auto_options = {
                     }], //立即升级
                 },
                 on_off: [{
-                    interval: -1,
-                    seasons: ['Winter'],
+                    interval: -1, //满足条件后on调整的大小， 当前 on + interval
+                    seasons: ['Winter'], //当前季节是否满足
                     energyEmergency: true,
                 }, {
-                    interval: 1,
+                    interval: 1, //满足条件后on调整的大小， 当前 on + interval
                     seasons: ['Spring', 'Summer', 'Autumn'],
                     energyEmergency: false,
                 }],
@@ -736,7 +736,7 @@ auto_options = {
         },
     },
     craft:{
-        strategies:{
+        strategies:{  //craft策略，type为father时，会向上找对应的策略craft，father时，value无效
             beam: [{name: 'wood', value: 0.1, type: 'percentage'}, {name: 'beam', value: 0.1, type: 'percentage'}],
             scaffold: [{name: 'beam', value: 0.1, type: 'percentage'}, {name: 'wood', value: 0.1, type: 'percentage'},
                 {name: 'beam', value: 0.1, type: 'percentage'}, {name: 'scaffold', value: 0.1, type: 'percentage'}],
@@ -764,15 +764,15 @@ auto_options = {
         },
         resource:{
             catnip: {
-                craft_res: ['wood'],
+                craft_res: ['wood'], //craft目标资源，未配置时为本身，比如本条如果未配置，则默认为catnip
             },
             wood: {
                 craft_res: ['beam'],
             },
             beam: {
-                timer: {
+                timer: {  //定时craft
                     woodIsShortRes: false,
-                    cycle_unit_s: 10,
+                    cycle_unit_s: 10,  //周期
                 },
             },
             minerals: {
@@ -786,8 +786,8 @@ auto_options = {
             },
             coal: {
                 craft_res: ['steel'],
-                craftWhenFull: {
-                    value: 0.99,
+                craftWhenFull: {    //当资源满时，里面是full条件
+                    value: 0.99,   //99% 当前值/max
                     noShortRes: ['iron', 'plate'],
                 },
             },
@@ -855,7 +855,7 @@ auto_options = {
                 },
                 val0: {
                     immediately:[{
-                        shipCanCraft: true,
+                        shipCanCraft: true, //在workshop中是否能craft，因为资源是逐步解锁的，有时候需要等待资源解锁
                         starchartMinValue: 25,
                         force_incr_priority: true,
                     }],
@@ -892,8 +892,8 @@ auto_options = {
             },
             titanium: {
                 craft_res: ['titanium'],
-                priorityWhen:{
-                    need_resources: [{name: 'slab', value: 50}],
+                priorityWhen:{  //当前short_resource资源有titanium时
+                    need_resources: [{name: 'slab', value: 50}], //需要保持slab有50个
                 }
             },
             oil: {
@@ -903,7 +903,7 @@ auto_options = {
                 },
             },
             furs:{
-                craftWhenRatioLe0: true,
+                craftWhenRatioLe0: true,  //当前资源的ratio是否小于0，本条配置的意思是：当furs的ratio小于等于0时，理解craft目标craft_res
                 craft_res: ['parchment'],
                 immediately: [{
                     fursIsShortRes: false,
@@ -963,12 +963,12 @@ auto_options = {
     kittens: {
         jobs: {
             woodcutter: {
-                default_value: 1,
+                default_value: 1, //最少kittens保持数量
                 resources:{
-                    wood: {
+                    wood: {  //job生产的资源，下面条件满足时，需要加kittens
                         avgRatioLe: {value: 0, count: 10},
                         avgValueLe: {value: 0, count: 10},
-                        reduceWhenFull: {value: 0.95},
+                        reduceWhenFull: {value: 0.95}, //快满时减kittens
                     },
                 },
             },
@@ -1018,7 +1018,7 @@ auto_options = {
                     }
                 },
                 immediately: [{
-                        tradeFrequently: {value: true},
+                        tradeFrequently: {value: true}, //是否交易频繁，某些资源主要来源靠trade，频繁发生购买时触发
                         manpowerAvgRatioLe: {value: 0}
                     },{
                         tradeFrequently: {value: true},
@@ -1026,7 +1026,7 @@ auto_options = {
                         manpowerIsAvgWillEmpty: {value: 0.1, count: 10},
                     },{
                         tradeFrequently: {value: true},
-                        fromJob: 'woodcutter',
+                        fromJob: 'woodcutter',   //从woodcutter调整为当前工作(hunter)，每次1个
                         manpowerAvgValueLe: {value: 100},
                     },{
                         tradeFrequently: {value: true},
@@ -1063,7 +1063,7 @@ auto_options = {
                 },
                 immediately: [{
                     tradeFrequently: {value: true},
-                    isGeologistProduceGold: true,
+                    isGeologistProduceGold: true,  //geologist是否会生产gold，geologist开始默认不生产gold，需要完成某些研究
                     goldAvgRatioLe: {value: 0},
                 },{
                     tradeFrequently: {value: true},
@@ -1089,14 +1089,14 @@ auto_options = {
         }
     },
     trade: {
-        tradeRes: {
+        tradeRes: { //允许交易的资源
             titanium: [{}], coal: [{}], oil: [{}], iron: [{}],
             steel: [{
-                goldMinValue: 'max/2', //总容量的1/2
+                goldMinValue: 'max/2', //总容量的1/2，也可以直接配置具体数值
             },{
                 coalIsWillFull: {value: 0.95},
                 ironIsNotWillFull: {value: 0.95},
-                srcRes: 'iron',
+                srcRes: 'iron', //实际需要购买的资源，满足条件时，购买的是iron而不是steel
             },{
                 coalIsNotWillFull: {value: 0.95},
                 ironIsWillFull: {value: 0.95},
@@ -1118,11 +1118,11 @@ auto_options = {
                 srcRes: 'titanium', //实际购买的资源
             }],
         },
-        timer: {cycle_unit_s: 60},
+        timer: {cycle_unit_s: 60}, //定时随机购买
         races: {
             dragons: {
                 immediately: [{
-                    titaniumIsWillFull: {value: 0.99},
+                    titaniumIsWillFull: {value: 0.99}, //当titanium快满时，触发dragons购买
                 }],
             }
         }
